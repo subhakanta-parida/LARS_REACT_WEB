@@ -1,0 +1,85 @@
+/* Preflight is skipped so Tailwind's reset doesn't override MUX component styles. */
+/* MUX + custom CSS share a layer below utilities; unlayered, MUX's `* { margin: 0 }` beats Tailwind. */
+@layer theme, base, mux, components, utilities;
+@import '@manulife/mux/styles/index.css' layer(mux);
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+:root {
+  --lars-ink: #282b3e;
+  --lars-green: #006f51;
+  --lars-brand: #00a758;
+  --lars-border: #8d90a2;
+  --lars-muted: #5c626a;
+  --lars-rail: #414357;
+}
+
+@theme inline {
+  --color-lars-ink: var(--lars-ink);
+  --color-lars-green: var(--lars-green);
+  --color-lars-brand: var(--lars-brand);
+  --color-lars-muted: var(--lars-muted);
+  --color-lars-rail: var(--lars-rail);
+}
+
+@layer mux {
+* { box-sizing: border-box; letter-spacing: 0; }
+.text-button { color: var(--lars-green); text-underline-offset: 5px; }
+.text-button:hover { text-decoration-thickness: 2px; }
+button, input { font: inherit; }
+:focus-visible { outline: 3px solid #006f51; outline-offset: 4px; }
+.login-body { display: grid; grid-template-columns: 80px minmax(0, 0.94fr) minmax(0, 1.06fr); min-height: calc(100dvh - 52px); }
+.brand-rail { background: var(--lars-rail); display: flex; flex-direction: column; align-items: center; }
+.rail-mark { width: 80px; height: 80px; background: var(--lars-brand); color: white; display: grid; place-items: center; font-size: 40px; font-weight: 700; font-style: italic; }
+.rail-label { color: #fff; writing-mode: vertical-rl; margin-top: 36px; font-size: 13px; }
+.landscape-panel { position: relative; overflow: hidden; min-height: 700px; background: #567e78; }
+.landscape-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 48% center; }
+.landscape-panel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(0 35 29 / 30%), transparent 40%, rgb(0 35 29 / 60%)); }
+.landscape-brand { position: absolute; z-index: 1; left: 36px; top: 38px; width: 156px; height: 42px; }
+.landscape-brand svg, .mobile-brand svg { width: 100%; height: 100%; }
+.landscape-caption { position: absolute; z-index: 1; bottom: 60px; left: 40px; right: 24px; color: white; }
+.caption-rule { display: block; width: 48px; border-top: 4px solid #00c582; }
+.landscape-caption p { font-size: 34px; line-height: 1.22; font-weight: 300; margin: 24px 0 0; }
+.sign-in-panel { padding: 62px 56px 24px; display: flex; flex-direction: column; min-width: 0; }
+.form-content { width: 100%; max-width: 470px; margin: auto; padding-bottom: 48px; }
+.mobile-brand { display: none; }
+.product-name { display: block; color: var(--lars-green); font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+h1 { font-size: 42px; line-height: 1.2; font-weight: 300; margin: 0; }
+h1 em { font-family: 'Manulife JH Serif', Georgia, serif; font-weight: 400; }
+.intro { margin: 18px 0 34px; font-size: 17px; line-height: 1.5; color: var(--lars-muted); }
+.login-fields { display: flex; flex-direction: column; gap: 23px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.login-fields .mux-Input, .login-fields .mux-Select { --mux-Input-width: 100%; width: 100%; }
+.remember-label { display: flex; align-items: center; gap: 12px; font-size: 16px; cursor: pointer; }
+.remember-label input { width: 23px; height: 23px; margin: 0; accent-color: var(--lars-green); flex-shrink: 0; }
+.form-actions { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 16px; margin-top: 3px; }
+.form-actions .mux-Button { min-width: 0; width: 100%; }
+.auth-error { background: #fff2f0; border-left: 4px solid #b3291e; padding: 14px 16px; color: #8d211b; line-height: 1.5; }
+.help-section { border-top: 1px solid #e1e3e5; margin-top: 30px; padding-top: 24px; }
+.text-button { background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; font-size: 17px; }
+.help-content { font-size: 15px; line-height: 1.6; margin-top: 16px; }
+.security-note { font-size: 13px; line-height: 1.6; color: var(--lars-muted); margin: 24px 0 0; }
+
+@media (min-width: 1600px) {
+  .sign-in-panel { padding-top: 80px; padding-bottom: 32px; }
+  .form-content { max-width: 500px; }
+}
+@media (max-width: 1100px) {
+  .login-body { grid-template-columns: 64px minmax(0, 0.8fr) minmax(0, 1.2fr); }
+  .rail-mark { width: 64px; height: 72px; }
+  .sign-in-panel { padding: 44px 32px 24px; }
+  h1 { font-size: 36px; }
+  .landscape-brand { left: 24px; width: 136px; }
+  .landscape-caption { left: 24px; }
+  .landscape-caption p { font-size: 28px; }
+}
+@media (max-width: 760px) {
+  .login-body { display: block; min-height: calc(100dvh - 48px); }
+  .brand-rail, .landscape-panel { display: none; }
+  .sign-in-panel { padding: 28px 24px 22px; min-height: calc(100dvh - 48px); }
+  .form-content { padding-bottom: 40px; }
+  .mobile-brand { display: block; width: 150px; height: 40px; margin-bottom: 36px; }
+  h1 { font-size: 36px; }
+  .intro { font-size: 16px; margin-bottom: 28px; }
+  .form-actions { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+}
+}
